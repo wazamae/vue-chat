@@ -17,14 +17,54 @@ export default {
         username: currentUser.id,
         name: currentUser.name
       });
+      // Save list of user's rooms in store
+      const rooms = currentUser.rooms.map(room => ({
+        id: room.id,
+        name: room.name
+      }))
+      commit('setRooms', rooms);
+      // Subscribe user to a room
+      const activeRoom = state.activeRoom || rooms[0];
+      commit('setActiveRoom', {
+        id: activeRoom.id,
+        name: activeRoom.name
+      });
+      await chatkit.subscribeToRoom(activeRoom.id);
       commit('setReconnect', false);
 
       // Test state.user
-      console.log(state.user);
+      //console.log(state.user);
+
+      return true;
     } catch (error) {
       handleError(commit, error)
     } finally {
       commit('setLoading', false);
     }
+  },
+  async changeRoom({commit}, roomId) {
+    try {
+      const {id, name} = await chatkit.subscribeToRoom(roomId);
+      commit('setActiveRoom', {id, name});
+    } catch(error) {
+      handleError(commit, error);
+    }
+  },
+  async sendMessage({commit}, message) {
+    try {
+      commit('setError', '');
+      commit('setSending', true);
+      const messageId = await chatkit.sendMessage(message);
+      return messageId;
+    } catch(error) {
+      handleError(commit, error);
+    } finally {
+      commit('setSending', false);
+    }
+  },
+  async logout({commit}) {
+    commit('reset');
+    chatkit.disconnectUser();
+    window.localStorage.clear();
   }
 }
