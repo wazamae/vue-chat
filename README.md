@@ -1,4 +1,5 @@
 # vue-chatkit
+[![Known Vulnerabilities](https://snyk.io/test/github/wazamae/vue-chat/badge.svg?targetFile=package.json)](https://snyk.io/test/github/wazamae/vue-chat?targetFile=package.json)
 
 ## Project setup
 ```
