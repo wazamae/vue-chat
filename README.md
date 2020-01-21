@@ -1,6 +1,9 @@
 # vue-chatkit
 [![Known Vulnerabilities](https://snyk.io/test/github/wazamae/vue-chat/badge.svg?targetFile=package.json)](https://snyk.io/test/github/wazamae/vue-chat?targetFile=package.json)
 
+## Overview
+I made this project from https://www.sitepoint.com/pusher-vue-real-time-chat-app/
+
 ## Project setup
 ```
 npm install
